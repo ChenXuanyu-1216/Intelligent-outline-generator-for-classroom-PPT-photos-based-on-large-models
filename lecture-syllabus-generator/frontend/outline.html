@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大纲预览与校对 - 课堂PPT大纲生成器</title>
+    <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+    <header class="header">
+        <h1>📚 大纲预览与校对</h1>
+        <nav><a href="/">返回上传</a> | <a href="/history.html">历史记录</a></nav>
+    </header>
+    <main class="container">
+        <section class="outline-section">
+            <div class="toolbar">
+                <button id="edit-btn" class="btn btn-secondary">编辑</button>
+                <button id="save-btn" class="btn btn-primary hidden">保存</button>
+                <button id="cancel-edit-btn" class="btn btn-secondary hidden">取消</button>
+                <button id="regenerate-btn" class="btn btn-warning">重新生成</button>
+                <button id="export-btn" class="btn btn-primary">导出Word</button>
+            </div>
+            <div id="outline-view" class="outline-view"></div>
+            <textarea id="outline-editor" class="outline-editor hidden" rows="30"></textarea>
+            <div class="legend">
+                <span class="legend-item"><span class="dot dot-original"></span>课堂原话</span>
+                <span class="legend-item"><span class="dot dot-ai"></span>AI推断</span>
+            </div>
+        </section>
+    </main>
+    <script src="/js/api.js"></script>
+    <script src="/js/outline.js"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+version: "1.0.0"
+prompt: |
+  请识别这张PPT照片的内容。
+  要求：
+  1. 提取页面的主标题
+  2. 提取页面中的知识点要点
+  3. 对每个知识点标注类型（概念/结论/方法/示例）
+  4. 区分课堂原话与AI推断内容
+  返回JSON格式：{title, points: [{content, kp_type, source_type}]}

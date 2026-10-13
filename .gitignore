@@ -1,0 +1,33 @@
+# Local development tool state
+.codeartsdoer/
+.idea/
+.vscode/
+
+# Python environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Local secrets; keep the documented template
+.env
+.env.*
+!.env.example
+
+# Application runtime data
+/lecture-syllabus-generator/backend/data/
+/lecture-syllabus-generator/backend/storage/
+*.log
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
