@@ -4,7 +4,7 @@ from app.services.recognizer import get_recognizer, RecognitionResult
 from app.services.extractor import Extractor
 from app.services.clusterer import Clusterer
 from app.services.outline_service import outline_service
-from app.errors import PipelineError, TaskNotFoundError
+from app.errors import AppError, PipelineError, TaskNotFoundError
 
 
 class Pipeline:
@@ -18,32 +18,26 @@ class Pipeline:
         if not task:
             raise TaskNotFoundError()
 
-        task.status = "running"
-        db.commit()
-
-        pages = db.query(Page).filter(Page.task_id == task_id).all()
+        pages = db.query(Page).filter(Page.task_id == task_id).order_by(Page.page_no).all()
+        selected_pages = pages
         if page_no is not None:
-            pages = [p for p in pages if p.page_no == page_no]
+            selected_pages = [p for p in pages if p.page_no == page_no]
+        if not selected_pages:
+            raise AppError("PAGE_NOT_FOUND", "页面不存在。", status_code=404)
 
-        any_failed = False
-        for page in pages:
-            try:
-                result = self.recognizer.recognize(page.page_no, page.file_path)
-                page.recognized_text = result.text
-                page.confidence = result.confidence
-                page.low_confidence_flag = result.low_confidence
-                page.failed_flag = False
-                page.error_msg = None
-            except Exception as e:
-                page.failed_flag = True
-                page.error_msg = str(e)
-                any_failed = True
-
+        task.status = "running"
+        task.error_msg = None
         db.commit()
+        for page in selected_pages:
+            self._recognize_page(page)
 
-        if any_failed:
-            all_failed = all(p.failed_flag for p in pages)
-            task.status = "failed" if all_failed else "partial"
+        if all(p.failed_flag for p in pages):
+            task.status = "failed"
+            task.error_msg = "所有页面识别失败，请重试。"
+        elif any(p.failed_flag for p in pages):
+            task.status = "partial"
+        elif any(p.recognized_text is None for p in pages):
+            task.status = "pending"
         else:
             task.status = "success"
         db.commit()
@@ -51,14 +45,47 @@ class Pipeline:
         return {"task_id": task_id, "status": task.status}
 
     def run_pipeline(self, db: Session, task_id: int) -> dict:
+        try:
+            return self._run_pipeline(db, task_id)
+        except Exception as exc:
+            db.rollback()
+            task = db.get(Task, task_id)
+            if task is not None:
+                task.status = "failed"
+                task.error_msg = exc.message if isinstance(exc, AppError) else "大纲生成失败，请重试。"
+                db.commit()
+            raise
+
+    def _recognize_page(self, page: Page) -> bool:
+        try:
+            result = self.recognizer.recognize(page.page_no, page.file_path)
+            page.recognized_text = result.text
+            page.recognized_structured = result.structured
+            page.confidence = result.confidence
+            page.low_confidence_flag = result.low_confidence
+            page.failed_flag = False
+            page.error_msg = None
+            return True
+        except Exception as exc:
+            # Failed retries cannot reuse stale successful recognition.
+            page.recognized_text = None
+            page.recognized_structured = None
+            page.confidence = 0.0
+            page.low_confidence_flag = False
+            page.failed_flag = True
+            page.error_msg = exc.message if isinstance(exc, AppError) else "页面识别失败，请重试。"
+            return False
+
+    def _run_pipeline(self, db: Session, task_id: int) -> dict:
         task = db.query(Task).filter(Task.id == task_id).first()
         if not task:
             raise TaskNotFoundError()
 
         task.status = "running"
+        task.error_msg = None
         db.commit()
 
-        pages = db.query(Page).filter(Page.task_id == task_id).all()
+        pages = db.query(Page).filter(Page.task_id == task_id).order_by(Page.page_no).all()
         if not pages:
             raise PipelineError("没有页面数据。")
 
@@ -67,23 +94,25 @@ class Pipeline:
         any_failed = False
 
         for page in pages:
-            if page.failed_flag and not page.recognized_text:
+            if page.failed_flag:
                 any_failed = True
                 continue
 
             if not page.recognized_text:
-                result = self.recognizer.recognize(page.page_no, page.file_path)
-                page.recognized_text = result.text
-                page.confidence = result.confidence
-                page.low_confidence_flag = result.low_confidence
-                recognition = result
-            else:
-                recognition = RecognitionResult(
-                    text=page.recognized_text,
-                    confidence=page.confidence,
-                    low_confidence=page.low_confidence_flag,
-                    structured=self._reconstruct_structured(page.recognized_text, page.page_no),
-                )
+                if not self._recognize_page(page):
+                    any_failed = True
+                    continue
+            structured = page.recognized_structured
+            # Text-only providers return a placeholder title and no points.
+            # Reconstruct their real title from text instead of using that shell.
+            if not structured or not structured.get("points"):
+                structured = self._reconstruct_structured(page.recognized_text, page.page_no)
+            recognition = RecognitionResult(
+                text=page.recognized_text,
+                confidence=page.confidence,
+                low_confidence=page.low_confidence_flag,
+                structured=structured,
+            )
 
             title = recognition.structured.get("title", f"页面{page.page_no}")
             page_titles[page.page_no] = title
@@ -94,9 +123,10 @@ class Pipeline:
         db.commit()
 
         deduped = self.extractor.dedup_cross_page(all_points)
+        if not deduped:
+            raise PipelineError("没有可用于生成大纲的识别内容，请重试失败页面。")
 
         db.query(KnowledgePoint).filter(KnowledgePoint.task_id == task_id).delete()
-        db.commit()
 
         for kp in deduped:
             db.add(KnowledgePoint(
@@ -108,7 +138,7 @@ class Pipeline:
                 source_pages=kp.source_pages,
                 dedup_key=kp.dedup_key,
             ))
-        db.commit()
+        db.flush()
 
         modules = self.clusterer.cluster(deduped, page_titles)
         markdown = outline_service.render_markdown(modules)
@@ -119,11 +149,11 @@ class Pipeline:
             )
         ).delete(synchronize_session=False)
         db.query(Outline).filter(Outline.task_id == task_id).delete()
-        db.commit()
+        db.flush()
 
         outline = Outline(task_id=task_id, markdown=markdown, version=1)
         db.add(outline)
-        db.commit()
+        db.flush()
 
         for mi, module in enumerate(modules):
             node = OutlineNode(
@@ -146,8 +176,6 @@ class Pipeline:
                     parent_id=node.id,
                     sort_order=ki,
                 ))
-        db.commit()
-
         if any_failed:
             task.status = "partial"
         else:
@@ -170,7 +198,7 @@ class Pipeline:
         for line in lines[1:]:
             content = line.lstrip("- ").strip()
             if content:
-                points.append({"content": content, "kp_type": "concept", "source_type": "课堂原话"})
+                points.append({"content": content, "kp_type": "concept", "source_type": "来源待核对"})
         return {"title": title, "points": points}
 
 

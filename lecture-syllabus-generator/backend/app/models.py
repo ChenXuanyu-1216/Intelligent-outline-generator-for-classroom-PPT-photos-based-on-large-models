@@ -36,6 +36,7 @@ class Page(Base):
     low_confidence_flag = Column(Boolean, default=False)
     failed_flag = Column(Boolean, default=False)
     recognized_text = Column(Text, nullable=True)
+    recognized_structured = Column(JSON, nullable=True)
     error_msg = Column(Text, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 

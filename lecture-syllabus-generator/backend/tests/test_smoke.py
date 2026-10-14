@@ -7,17 +7,7 @@ from app.errors import (
 )
 from app.schemas import OutlineUpdateRequest
 
-from app.db import SessionLocal, init_db
-from app.config import DATA_DIR
-import os
-
-db_file = DATA_DIR / "app.db"
-try:
-    if db_file.exists():
-        os.remove(db_file)
-except PermissionError:
-    pass
-init_db()
+from app.db import SessionLocal
 
 
 def _make_upload(name: str = "test.png", content: bytes = b"\x89PNG\r\n\x1a\n" + b"\x00" * 100):
@@ -66,8 +56,8 @@ def _run_async(coro):
 
 
 def test_error_contract_unknown_task():
-    with pytest.raises(TaskNotFoundError) as exc_info:
-        tasks.get_task(task_id=999999, db=_new_db())
+    with _new_db() as db, pytest.raises(TaskNotFoundError) as exc_info:
+        tasks.get_task(task_id=999999, db=db)
     exc = exc_info.value
     assert exc.code == "TASK_NOT_FOUND"
     assert exc.message == "任务不存在。"

@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, inspect, text
 from sqlalchemy.orm import sessionmaker, declarative_base
 from app.config import settings, DATA_DIR
 
@@ -25,3 +25,9 @@ def get_db():
 def init_db():
     from app import models  # noqa: F401
     Base.metadata.create_all(bind=engine)
+    # Upgrade existing SQLite databases without deleting their records.
+    if engine.dialect.name == "sqlite":
+        with engine.begin() as connection:
+            columns = {column["name"] for column in inspect(connection).get_columns("page")}
+            if "recognized_structured" not in columns:
+                connection.execute(text("ALTER TABLE page ADD COLUMN recognized_structured JSON"))

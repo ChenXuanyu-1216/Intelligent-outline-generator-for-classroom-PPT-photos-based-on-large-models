@@ -34,8 +34,8 @@ class OutlineService:
                 if "【" in content and "】" in content:
                     s = content.rfind("【")
                     e = content.rfind("】")
-                    if e > s:
-                        source_type = content[s + 2:e]
+                    if e == len(content) - 1 and content[s + 1:e] in {"课堂原话", "AI推断", "来源待核对"}:
+                        source_type = content[s + 1:e]
                         content = content[:s] + content[e + 1:]
                 current_module["points"].append({
                     "content": content.strip(),

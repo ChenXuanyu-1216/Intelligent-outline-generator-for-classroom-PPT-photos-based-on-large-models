@@ -20,6 +20,7 @@ class Settings(BaseSettings):
     low_confidence_threshold: float = 0.60
 
     database_url: str = "sqlite:///./data/app.db"
+    data_dir: str = "data"
     storage_dir: str = "storage"
     prompts_dir: str = "prompts"
 
@@ -35,7 +36,7 @@ class Settings(BaseSettings):
 settings = Settings()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-DATA_DIR = BASE_DIR / "data"
+DATA_DIR = BASE_DIR / settings.data_dir
 STORAGE_DIR = BASE_DIR / settings.storage_dir
 PROMPTS_DIR = BASE_DIR / settings.prompts_dir
 FRONTEND_DIR = BASE_DIR.parent / "frontend"

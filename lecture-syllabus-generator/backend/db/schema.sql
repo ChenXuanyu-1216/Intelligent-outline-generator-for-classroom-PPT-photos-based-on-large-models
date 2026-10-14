@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS page (
     low_confidence_flag  BOOLEAN DEFAULT 0,
     failed_flag          BOOLEAN DEFAULT 0,
     recognized_text      TEXT,
+    recognized_structured JSON,
     error_msg            TEXT,
     created_at           DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (task_id) REFERENCES task(id) ON DELETE CASCADE
