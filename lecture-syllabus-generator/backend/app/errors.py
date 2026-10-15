@@ -81,6 +81,16 @@ class PipelineError(AppError):
         )
 
 
+class ClusteringFailedError(AppError):
+    def __init__(self, detail: str = "模型聚类失败，请重试或切换规则模式。", retryable: bool = True):
+        super().__init__(
+            code="CLUSTERING_FAILED",
+            message=detail,
+            retryable=retryable,
+            status_code=502,
+        )
+
+
 async def app_error_handler(request: Request, exc: AppError):
     return JSONResponse(
         status_code=exc.status_code,

@@ -1,5 +1,6 @@
 from pydantic_settings import BaseSettings
 from pathlib import Path
+from typing import Literal
 
 
 class Settings(BaseSettings):
@@ -12,6 +13,7 @@ class Settings(BaseSettings):
     model_name: str = "gpt-4o-mini"
     model_timeout_seconds: int = 60
     model_max_retry: int = 1
+    cluster_provider: Literal["rule", "model"] = "rule"
 
     allowed_ext: str = ".jpg,.jpeg,.png,.pdf"
     max_file_mb: int = 10

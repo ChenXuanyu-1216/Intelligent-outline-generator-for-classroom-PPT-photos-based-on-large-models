@@ -18,6 +18,7 @@ os.environ["APP_DATABASE_URL"] = "sqlite:///" + TEST_DATABASE.as_posix()
 os.environ["APP_DATA_DIR"] = str(TEST_DATABASE.parent)
 os.environ["APP_STORAGE_DIR"] = str(TEST_ROOT / "storage")
 os.environ["APP_MODEL_PROVIDER"] = "mock"
+os.environ["APP_CLUSTER_PROVIDER"] = "rule"
 os.environ["APP_MODEL_API_KEY"] = ""
 
 
