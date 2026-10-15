@@ -32,6 +32,7 @@
 ```text
 .
 ├── README.md                         # 仓库说明
+├── frontend-preview.html             # 可直接打开的独立前端预览
 ├── .gitignore                        # 忽略本地配置、缓存和运行数据
 ├── doc1_text.txt                      # 项目初始化与工程基线记录
 ├── doc2_text.txt                      # 开发任务清单与实现计划
@@ -100,6 +101,14 @@ cp .env.example .env
 | 工程基线信息 | http://127.0.0.1:8000/api/meta |
 
 Windows 可直接双击 `lecture-syllabus-generator/scripts/start_backend.bat`：脚本优先使用 `backend/.venv/Scripts/python.exe`，没有项目虚拟环境时才调用当前环境的 `python`。缺少依赖或启动失败时会保留窗口并显示提示。macOS/Linux 可激活已安装依赖的 Python 环境后，从应用目录执行 `bash scripts/start_backend.sh`，该脚本使用当前环境中的 `python`。
+
+### 前端页面与离线预览
+
+首页采用灰绿配色和简洁布局，背景中的数学公式与代码缓慢向上流动，默认清晰度为 30%。首页继续使用原有的文件选择、顺序调整、删除和任务提交功能。
+
+仅查看样式时，直接用浏览器打开仓库根目录的 [`frontend-preview.html`](frontend-preview.html)，无需启动后端或联网。该文件支持选择文件并展示文件名，但不提交任务；实际操作请使用启动后的首页。
+
+页面默认遵循系统的“减少动态效果”设置。背景静止时，可点击右上角“播放背景”主动开启，再次点击“暂停背景”停止，无需修改系统设置。首页样式与动效分别位于 `frontend/css/home.css` 和 `frontend/js/knowledge-flow.js`，不依赖前端构建工具或外部 CDN。
 
 ## 模型与上传配置
 
