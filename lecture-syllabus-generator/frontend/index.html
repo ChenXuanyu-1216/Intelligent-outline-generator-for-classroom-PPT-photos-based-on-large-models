@@ -1,34 +1,115 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>课堂PPT照片智能大纲生成器</title>
-    <link rel="stylesheet" href="/css/app.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>课堂PPT照片智能大纲生成器</title>
+  <link rel="stylesheet" href="/css/home.css">
 </head>
-<body>
-    <header class="header">
-        <h1>📚 课堂PPT照片智能大纲生成器</h1>
-        <nav><a href="/">上传</a> | <a href="/history.html">历史记录</a></nav>
-    </header>
-    <main class="container">
-        <section class="upload-section">
-            <h2>上传PPT照片</h2>
-            <div id="drop-zone" class="drop-zone">
-                <p>拖拽图片到此处或点击选择文件</p>
-                <p class="hint">支持 JPG / JPEG / PNG / PDF，单张≤10MB，单批≤20张</p>
-                <input type="file" id="file-input" multiple accept=".jpg,.jpeg,.png,.pdf" hidden>
-            </div>
-            <div id="file-list" class="file-list"></div>
-            <div class="actions">
-                <button id="generate-btn" class="btn btn-primary" disabled>生成大纲</button>
-            </div>
-            <div class="disclaimer">
-                <p>⚠️ AI免责提示：本工具使用AI模型识别PPT内容，生成结果仅供参考，请人工校对后使用。</p>
-            </div>
-        </section>
-    </main>
-    <script src="/js/api.js"></script>
-    <script src="/js/upload.js"></script>
+<body id="knowledge-flow-home">
+  <div class="kf-background" aria-hidden="true">
+    <div class="kf-stream" style="--left:2%;--travel:83s;--delay:-31s;--tilt:-5deg">
+      <div class="kf-ribbon">
+        <div class="kf-cycle">
+          <span class="kf-equation">∫<sub>0</sub><sup>1</sup> x² dx = ⅓</span>
+          <span class="kf-equation kf-large">e<sup>iπ</sup> + 1 = 0</span>
+          <span class="kf-code">return a + b;</span>
+          <span class="kf-equation">∇ · E = ρ / ε₀</span>
+        </div>
+        <div class="kf-cycle">
+          <span class="kf-equation">∫<sub>0</sub><sup>1</sup> x² dx = ⅓</span>
+          <span class="kf-equation kf-large">e<sup>iπ</sup> + 1 = 0</span>
+          <span class="kf-code">return a + b;</span>
+          <span class="kf-equation">∇ · E = ρ / ε₀</span>
+        </div>
+      </div>
+    </div>
+    <div class="kf-stream kf-far" style="--left:18%;--travel:119s;--delay:-74s;--tilt:3deg">
+      <div class="kf-ribbon">
+        <div class="kf-cycle">
+          <span class="kf-equation kf-large">Ax = λx</span>
+          <span class="kf-equation">lim<sub>x→0</sub> sin x / x = 1</span>
+          <span class="kf-code">while (node) { node = node.next; }</span>
+          <span class="kf-equation">f(x) = ∑ a<sub>n</sub>x<sup>n</sup></span>
+        </div>
+        <div class="kf-cycle">
+          <span class="kf-equation kf-large">Ax = λx</span>
+          <span class="kf-equation">lim<sub>x→0</sub> sin x / x = 1</span>
+          <span class="kf-code">while (node) { node = node.next; }</span>
+          <span class="kf-equation">f(x) = ∑ a<sub>n</sub>x<sup>n</sup></span>
+        </div>
+      </div>
+    </div>
+    <div class="kf-stream" style="--left:78%;--travel:97s;--delay:-56s;--tilt:4deg">
+      <div class="kf-ribbon">
+        <div class="kf-cycle">
+          <span class="kf-equation">d/dx ln x = 1/x</span>
+          <span class="kf-code">const mid = (lo + hi) &gt;&gt; 1;</span>
+          <span class="kf-equation kf-large">iℏ ∂ψ/∂t = Ĥψ</span>
+          <span class="kf-equation">F = ma</span>
+        </div>
+        <div class="kf-cycle">
+          <span class="kf-equation">d/dx ln x = 1/x</span>
+          <span class="kf-code">const mid = (lo + hi) &gt;&gt; 1;</span>
+          <span class="kf-equation kf-large">iℏ ∂ψ/∂t = Ĥψ</span>
+          <span class="kf-equation">F = ma</span>
+        </div>
+      </div>
+    </div>
+    <div class="kf-stream kf-far" style="--left:58%;--travel:107s;--delay:-16s;--tilt:-3deg">
+      <div class="kf-ribbon">
+        <div class="kf-cycle">
+          <span class="kf-equation">P(A ∩ B) = P(A|B) P(B)</span>
+          <span class="kf-equation kf-large">[ a b ]<br>[ c d ]</span>
+          <span class="kf-code">for (let i = 0; i &lt; n; i++)</span>
+          <span class="kf-equation">∂²u/∂t² = c² ∂²u/∂x²</span>
+        </div>
+        <div class="kf-cycle">
+          <span class="kf-equation">P(A ∩ B) = P(A|B) P(B)</span>
+          <span class="kf-equation kf-large">[ a b ]<br>[ c d ]</span>
+          <span class="kf-code">for (let i = 0; i &lt; n; i++)</span>
+          <span class="kf-equation">∂²u/∂t² = c² ∂²u/∂x²</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <header class="kf-header">
+    <div class="kf-brand"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2h-4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V8"/><path d="M16.706 2.706A2.4 2.4 0 0 0 15 2v5a1 1 0 0 0 1 1h5a2.4 2.4 0 0 0-.706-1.706z"/><path d="M5 7a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h8a2 2 0 0 0 1.732-1"/></svg><span>课堂大纲</span></div>
+    <nav class="kf-nav" aria-label="主导航">
+      <a class="kf-nav-item kf-current" href="/" aria-current="page">新建整理</a>
+      <a class="kf-nav-item" href="/history.html">整理记录</a>
+    </nav>
+    <button class="kf-motion" type="button" aria-pressed="false">暂停背景</button>
+  </header>
+  <main class="kf-main">
+    <section class="kf-upload-page" aria-labelledby="upload-heading">
+      <div class="kf-heading">
+        <h1 id="upload-heading">新建整理</h1>
+        <p>添加课堂照片，按顺序整理成复习大纲。</p>
+      </div>
+      <div class="kf-workspace">
+        <div class="kf-section-head"><h2>课堂照片</h2><span>JPG / PNG / PDF</span></div>
+        <label id="drop-zone" class="kf-drop">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+          <strong>添加课堂照片</strong>
+          <span>将照片拖到这里，或选择文件</span>
+          <span class="kf-file-button">选择文件</span>
+          <small id="file-hint">最多 20 张，单张不超过 10 MB</small>
+          <input id="file-input" class="kf-file-input" type="file" multiple accept=".jpg,.jpeg,.png,.pdf" aria-label="选择课堂照片" aria-describedby="file-hint">
+        </label>
+        <div class="kf-list-header"><span>照片列表</span><span id="file-count" class="kf-file-count" aria-live="polite">0 张</span></div>
+        <div id="file-list" class="kf-files"><p class="kf-empty">还没有添加照片</p></div>
+        <div class="kf-bottom">
+          <span>照片顺序将作为来源页码。</span>
+          <button id="generate-btn" class="kf-generate" type="button" disabled>生成大纲</button>
+        </div>
+      </div>
+      <p class="kf-note">生成后可继续校对，并导出 Word。AI 生成结果仅供参考，请人工校对后使用。</p>
+    </section>
+  </main>
+  <script src="/js/api.js"></script>
+  <script src="/js/upload.js"></script>
+  <script src="/js/knowledge-flow.js"></script>
 </body>
 </html>
