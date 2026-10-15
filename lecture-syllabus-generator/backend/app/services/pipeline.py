@@ -126,6 +126,11 @@ class Pipeline:
         if not deduped:
             raise PipelineError("没有可用于生成大纲的识别内容，请重试失败页面。")
 
+        # Validate all model assignments before replacing any saved content.
+        # Network calls must not hold a SQLite write transaction open.
+        modules = self.clusterer.cluster(deduped, page_titles)
+        markdown = outline_service.render_markdown(modules)
+
         db.query(KnowledgePoint).filter(KnowledgePoint.task_id == task_id).delete()
 
         for kp in deduped:
@@ -139,9 +144,6 @@ class Pipeline:
                 dedup_key=kp.dedup_key,
             ))
         db.flush()
-
-        modules = self.clusterer.cluster(deduped, page_titles)
-        markdown = outline_service.render_markdown(modules)
 
         db.query(OutlineNode).filter(
             OutlineNode.outline_id.in_(

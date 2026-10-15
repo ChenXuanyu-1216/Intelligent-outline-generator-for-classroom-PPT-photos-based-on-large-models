@@ -11,7 +11,7 @@
 | 批量上传 | 上传课堂图片、调整顺序，以逻辑页码组织内容 |
 | 内容识别 | 提供 `mock`、`multimodal`、`fallback` 三种识别模式 |
 | 知识点抽取 | 从结构化结果或文本行提取知识点，按规范化文本跨页去重 |
-| 模块组织 | 当前按知识点的首个来源页及页面标题组织模块 |
+| 模块组织 | 默认按来源页组织；可启用模型按主题跨页分组，仅返回模块名与已有知识点 ID |
 | 大纲生成与校对 | 生成 Markdown 大纲，在线编辑、保存并记录版本 |
 | 来源展示 | 保存并展示来源页码及来源类型；缺失来源信息时标记“来源待核对” |
 | Word 导出 | 将大纲导出为 `.docx` 文件 |
@@ -99,7 +99,7 @@ cp .env.example .env
 | 健康检查 | http://127.0.0.1:8000/api/health |
 | 工程基线信息 | http://127.0.0.1:8000/api/meta |
 
-也可激活已安装依赖的 Python 环境后使用 `scripts/start_backend.bat` 或 `bash scripts/start_backend.sh`（从应用目录执行）。脚本调用当前环境中的 `python`。
+Windows 可直接双击 `lecture-syllabus-generator/scripts/start_backend.bat`：脚本优先使用 `backend/.venv/Scripts/python.exe`，没有项目虚拟环境时才调用当前环境的 `python`。缺少依赖或启动失败时会保留窗口并显示提示。macOS/Linux 可激活已安装依赖的 Python 环境后，从应用目录执行 `bash scripts/start_backend.sh`，该脚本使用当前环境中的 `python`。
 
 ## 模型与上传配置
 
@@ -107,6 +107,7 @@ cp .env.example .env
 
 ```dotenv
 APP_MODEL_PROVIDER=mock
+APP_CLUSTER_PROVIDER=rule
 APP_MODEL_API_KEY=
 APP_MODEL_BASE_URL=https://api.openai.com/v1
 APP_MODEL_NAME=gpt-4o-mini
@@ -127,11 +128,40 @@ APP_LOW_CONFIDENCE_THRESHOLD=0.60
 
 实际接入模型时，将 `APP_MODEL_PROVIDER` 改为 `multimodal`，再填写密钥、模型名和接口地址。`.env` 已被 Git 忽略，仓库只保留空密钥的 `.env.example`。
 
+### 按主题聚类并保留原文与来源
+
+`APP_CLUSTER_PROVIDER` 独立控制聚类方式，修改配置后重启后端：
+
+- `rule`（默认）：沿用按首个来源页分组的规则，不调用聚类模型。
+- `model`：使用上述 `APP_MODEL_*` 连接配置调用模型，根据知识点内容跨页归组。服务商需要支持 Chat Completions 的文本输入及 `response_format: {"type": "json_object"}`。
+
+真实图片识别和主题聚类同时启用的配置为：
+
+```dotenv
+APP_MODEL_PROVIDER=multimodal
+APP_CLUSTER_PROVIDER=model
+# 同时配置 APP_MODEL_API_KEY、APP_MODEL_BASE_URL 和 APP_MODEL_NAME
+```
+
+也可以使用 `APP_MODEL_PROVIDER=mock` 加 `APP_CLUSTER_PROVIDER=model`，单独验证聚类接口；此时聚类输入仍是预设课程内容，不能用来评价真实图片识别质量。模型聚类始终需要有效密钥，不会因识别模式为 `mock` 而免除真实调用。
+
+程序在去重后为本次聚类输入分配 `kp_1`、`kp_2` 等临时 ID，模型只能返回以下结构：
+
+```json
+{"modules": [{"title": "索引与查询优化", "point_ids": ["kp_1", "kp_3"]}, {"title": "事务", "point_ids": ["kp_2"]}]}
+```
+
+每个输入 ID 必须恰好出现一次。未知、重复或遗漏 ID，空模块、无效标题、额外字段、无效 JSON 和截断结果都会被拒绝。标题为最多 120 个字符的单行文本。程序使用 ID 恢复原始知识点对象，正文、知识点类型、来源类型和全部来源页码均不由模型重写；模块来源页码由程序求并集。同文但不同来源类型的知识点继续分别保留。临时 ID 只对本次聚类有效，不写入数据库，也不作为跨版本引用。
+
+缺密钥、提示词缺失或损坏返回 `CLUSTER_CONFIG_ERROR`；聚类响应无效或服务失败返回 `CLUSTERING_FAILED`，超时返回 `MODEL_TIMEOUT`。仅对超时、连接故障和 HTTP 408、429、5xx 按 `APP_MODEL_MAX_RETRY` 有限重试，格式与 ID 校验失败不自动重试。失败时保留原有大纲和知识点，任务标记失败，不自动降级为规则结果；需要时将配置改为 `rule` 并重启。聚类提示词位于 `backend/prompts/cluster.yaml`，修改后也需重启以刷新缓存。
+
 ## 测试
 
 测试覆盖健康信息、上传格式校验、来源标签解析、分阶段识别与生成中的来源保留、跨页去重、编辑保存后重新打开和 Word 内容比对，以及超时、断连、部分失败、重试和异常恢复。
 
-**pytest 会在导入应用之前创建独立临时数据库和上传目录，强制使用模拟识别；测试不会清空日常使用的 `backend/data/app.db`。** 每个用例重置临时数据库，整轮结束后清理测试目录。模型超时与断连使用本地模拟传输，不发送真实 API 请求。
+**pytest 会在导入应用之前创建独立临时数据库和上传目录，强制使用模拟识别和默认规则聚类；测试不会清空日常使用的 `backend/data/app.db`。** 每个用例重置临时数据库，整轮结束后清理测试目录。模型识别与聚类测试使用本地模拟传输，不发送真实 API 请求。
+
+聚类测试覆盖跨页分组、完整且唯一的 ID 分配、拒绝模型改写字段、来源保留、有限重试、保存后重新打开和 Word 内容比对，以及重新生成失败时保留旧数据。
 
 在 `backend` 目录安装依赖并执行：
 
@@ -157,7 +187,7 @@ APP_LOW_CONFIDENCE_THRESHOLD=0.60
 
 ## 当前限制
 
-- 知识点去重使用文本规则，模块组织使用来源页规则，尚未实现模型驱动的语义聚类。
+- 知识点去重仍使用文本规则；模型聚类只做主题归组，不做语义去重或知识点改写。默认仍使用来源页规则；模型聚类的真实课程质量与性能需要实测。
 - 真实模型返回内容目前按文本行解析；未提供结构化来源时标记“来源待核对”，置信度仍使用固定值，识别质量与来源归因需要后续验证。
 - 上传配置包含 PDF，但当前未实现多页 PDF 拆页；识别请求使用 `image_url` 格式，PDF 能否处理取决于服务端兼容性。演示时建议使用 JPG、JPEG 或 PNG。
 - 默认绑定 `127.0.0.1:8000`，当前工程面向本地课堂演示，未提供用户认证或多用户数据隔离。
@@ -166,5 +196,6 @@ APP_LOW_CONFIDENCE_THRESHOLD=0.60
 
 - [项目初始化与工程基线记录](doc1_text.txt)
 - [开发任务清单与实现计划](doc2_text.txt)
+- [模型聚类与来源保留验证记录](docs/verification/2026-10-15-model-clustering.md)
 
 两份文档记录了课程工程基线和开发计划，其中的历史验证结果以文档编制时的记录为准，当前运行情况应以实际测试为准。
