@@ -81,7 +81,15 @@
       <a class="kf-nav-item" href="/">新建整理</a>
       <a class="kf-nav-item kf-current" href="/history.html" aria-current="page">整理记录</a>
     </nav>
-    <button class="kf-motion" type="button" aria-pressed="false">暂停背景</button>
+    <div class="kf-motion-controls">
+      <button class="kf-motion" type="button" aria-pressed="false">暂停背景</button>
+      <button class="kf-speed-toggle" type="button" aria-expanded="false" aria-controls="kf-speed-panel">速度 1×</button>
+      <div class="kf-speed-panel" id="kf-speed-panel" hidden>
+        <label for="kf-speed">流动速度 <output class="kf-speed-value" for="kf-speed">1×</output></label>
+        <input class="kf-speed-input" id="kf-speed" type="range" min="0.25" max="3" step="0.25" value="1">
+        <div class="kf-speed-hints"><span>舒缓</span><span>轻快</span></div>
+      </div>
+    </div>
   </header>
   <main class="kf-main">
     <section aria-labelledby="history-heading">
