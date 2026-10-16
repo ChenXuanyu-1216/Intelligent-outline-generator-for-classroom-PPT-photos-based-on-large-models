@@ -1,4 +1,3 @@
-import os
 from fastapi import APIRouter, Depends, UploadFile, File, Form
 from sqlalchemy.orm import Session
 from app.db import get_db
@@ -8,8 +7,9 @@ from app.schemas import (
     TaskCreateResponse, TaskStatusResponse, PagesResponse,
     PageDetail, PipelineResponse, TaskListResponse, TaskListItem,
 )
-from app.errors import FileFormatError, FileTooLargeError, TooManyFilesError, TaskNotFoundError
+from app.errors import TaskNotFoundError
 from app.services.pipeline import pipeline
+from app.services.upload_service import create_task_from_uploads
 
 router = APIRouter()
 
@@ -20,71 +20,7 @@ def create_task(
     order: str = Form(""),
     db: Session = Depends(get_db),
 ):
-    if len(files) > settings.max_files_per_batch:
-        raise TooManyFilesError()
-
-    rejected = []
-    valid_files = []
-    for i, f in enumerate(files):
-        ext = os.path.splitext(f.filename)[1].lower()
-        if ext not in settings.allowed_ext_list:
-            rejected.append({"filename": f.filename, "reason": f"格式不支持：{ext}"})
-            continue
-        valid_files.append((i, f))
-
-    if not valid_files:
-        raise FileFormatError("所有文件格式均不支持。")
-
-    if order.strip():
-        order_list = [int(x.strip()) for x in order.split(",") if x.strip()]
-    else:
-        order_list = list(range(1, len(valid_files) + 1))
-
-    sorted_files = []
-    for pos, original_idx in enumerate(order_list):
-        matching = [(i, f) for i, f in valid_files if i == original_idx - 1]
-        if matching:
-            sorted_files.append((pos + 1, matching[0][1]))
-
-    if not sorted_files:
-        sorted_files = [(pos + 1, f) for pos, (_, f) in enumerate(valid_files)]
-
-    task = Task(title="未命名任务", status="pending", page_count=len(sorted_files))
-    db.add(task)
-    db.commit()
-    db.refresh(task)
-
-    task_dir = STORAGE_DIR / str(task.id)
-    task_dir.mkdir(parents=True, exist_ok=True)
-
-    for page_no, f in sorted_files:
-        ext = os.path.splitext(f.filename)[1].lower()
-        saved_name = f"page_{page_no}{ext}"
-        saved_path = task_dir / saved_name
-        content = f.file.read()
-        if len(content) > settings.max_file_mb * 1024 * 1024:
-            rejected.append({"filename": f.filename, "reason": "文件大小超过限制"})
-            continue
-        with open(saved_path, "wb") as out:
-            out.write(content)
-        db.add(Page(
-            task_id=task.id,
-            page_no=page_no,
-            filename=f.filename,
-            file_path=str(saved_path),
-            confidence=0.0,
-            low_confidence_flag=False,
-            failed_flag=False,
-        ))
-
-    db.commit()
-    db.refresh(task)
-
-    return TaskCreateResponse(
-        task_id=task.id,
-        page_count=task.page_count,
-        rejected=rejected,
-    )
+    return create_task_from_uploads(db, files, order, STORAGE_DIR, settings)
 
 
 @router.get("/api/tasks/{task_id}", response_model=TaskStatusResponse)
