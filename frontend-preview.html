@@ -5,19 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="referrer" content="no-referrer">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<title>课堂大纲 · 前端预览</title>
+<title>课堂大纲 · 暖纸前端预览</title>
 <style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:0;background:inherit}iframe{display:block;width:100%;height:100vh;margin:0 auto;border:0}</style>
 
 </head>
 <body>
-<iframe id="codex-visualization" sandbox="allow-scripts" referrerpolicy="no-referrer" title="课堂大纲 · 前端预览" data-srcdoc="&lt;!doctype html&gt;
+<iframe id="codex-visualization" sandbox="allow-scripts" referrerpolicy="no-referrer" title="课堂大纲 · 暖纸前端预览" data-srcdoc="&lt;!doctype html&gt;
 &lt;html lang=&quot;zh-CN&quot; data-visualize-standalone&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;utf-8&quot;&gt;
 &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
 &lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
 &lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; &#x27;wasm-unsafe-eval&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src &#x27;unsafe-inline&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;&quot;&gt;
-&lt;title&gt;课堂大纲 · 前端预览&lt;/title&gt;
+&lt;title&gt;课堂大纲 · 暖纸前端预览&lt;/title&gt;
 &lt;style&gt;:root {
   color-scheme: light dark;
   background-color: var(
@@ -1864,8 +1864,8 @@ html&gt;body{padding:0}&lt;/style&gt;
   &lt;/header&gt;
 
   &lt;main class=&quot;kf-main&quot;&gt;
-    &lt;section class=&quot;kf-upload-page&quot;&gt;
-      &lt;div class=&quot;kf-heading&quot;&gt;&lt;h2&gt;新建整理&lt;/h2&gt;&lt;p&gt;添加课堂照片，按顺序整理成复习大纲。&lt;/p&gt;&lt;/div&gt;
+    &lt;section class=&quot;kf-upload-page&quot; hidden&gt;
+      &lt;div class=&quot;kf-heading&quot;&gt;&lt;h2&gt;整理今天的课堂&lt;/h2&gt;&lt;p&gt;添加课堂照片，按顺序整理成复习大纲。&lt;/p&gt;&lt;/div&gt;
       &lt;div class=&quot;kf-workspace&quot;&gt;
         &lt;div class=&quot;kf-section-head&quot;&gt;&lt;h3&gt;课堂照片&lt;/h3&gt;&lt;span&gt;JPG / PNG / PDF&lt;/span&gt;&lt;/div&gt;
         &lt;label class=&quot;kf-drop&quot;&gt;
@@ -1882,40 +1882,51 @@ html&gt;body{padding:0}&lt;/style&gt;
       &lt;/div&gt;
       &lt;p class=&quot;kf-note&quot;&gt;生成后可继续校对，并导出 Word。&lt;/p&gt;
     &lt;/section&gt;
-    &lt;section class=&quot;kf-history-page&quot; hidden&gt;
-      &lt;div class=&quot;kf-heading&quot;&gt;&lt;h2&gt;整理记录&lt;/h2&gt;&lt;p&gt;回看每一次课堂整理。&lt;/p&gt;&lt;/div&gt;
-      &lt;div class=&quot;kf-workspace kf-history-empty&quot;&gt;&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 24 24&quot; width=&quot;16&quot; height=&quot;16&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.5&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M2 6h4&quot;/&gt;&lt;path d=&quot;M2 10h4&quot;/&gt;&lt;path d=&quot;M2 14h4&quot;/&gt;&lt;path d=&quot;M2 18h4&quot;/&gt;&lt;rect width=&quot;16&quot; height=&quot;20&quot; x=&quot;4&quot; y=&quot;2&quot; rx=&quot;2&quot;/&gt;&lt;path d=&quot;M16 2v20&quot;/&gt;&lt;/svg&gt;&lt;p&gt;还没有整理记录&lt;/p&gt;&lt;button class=&quot;kf-return&quot; type=&quot;button&quot;&gt;新建整理&lt;/button&gt;&lt;/div&gt;
+    &lt;section class=&quot;kf-history-page&quot;&gt;
+      &lt;div class=&quot;kf-heading&quot;&gt;&lt;h2&gt;整理记录&lt;/h2&gt;&lt;p&gt;回看每一次课堂整理，继续校对与导出。&lt;/p&gt;&lt;/div&gt;
+      &lt;div class=&quot;kf-workspace kf-history-workspace&quot;&gt;
+        &lt;div class=&quot;kf-section-head&quot;&gt;&lt;h3&gt;示例记录&lt;/h3&gt;&lt;span id=&quot;task-count&quot;&gt;读取中&lt;/span&gt;&lt;/div&gt;
+        &lt;div id=&quot;task-list&quot; class=&quot;kf-history-list&quot; aria-live=&quot;polite&quot; aria-busy=&quot;true&quot;&gt;
+          &lt;div class=&quot;kf-history-state&quot;&gt;&lt;h3&gt;正在读取整理记录&lt;/h3&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;kf-history-preview-tools&quot;&gt;
+        &lt;p id=&quot;history-preview-feedback&quot; aria-live=&quot;polite&quot;&gt;以下为样式示例，不代表实际整理记录。&lt;/p&gt;
+        &lt;button class=&quot;kf-history-action&quot; type=&quot;button&quot; data-history-empty&gt;查看空记录样式&lt;/button&gt;
+      &lt;/div&gt;
     &lt;/section&gt;
   &lt;/main&gt;
 &lt;/div&gt;
 
 &lt;style&gt;
-  #knowledge-flow-preview {
-    --kf-bg: #fafbf9;
-    --kf-paper: #ffffff;
-    --kf-ink: #2b312c;
-    --kf-muted: #69716b;
-    --kf-line: #e1e5df;
-    --kf-wash: #f5f7f3;
-    --kf-accent: #374f40;
+#knowledge-flow-preview {
+    color-scheme: light dark;
+    --kf-bg: light-dark(#f7f5f0, #242321);
+    --kf-paper: light-dark(#fffefa, #2e2d2a);
+    --kf-ink: light-dark(#2d2c28, #e6e2da);
+    --kf-muted: light-dark(#6e6b63, #b1aba0);
+    --kf-line: light-dark(#dedbd2, #48443e);
+    --kf-wash: light-dark(#f0ede6, #36332e);
+    --kf-accent: light-dark(#b55b3c, #d08b6d);
     --kf-intensity: .3;
     --kf-pace: 1;
     position: relative;
     isolation: isolate;
     overflow: hidden;
     min-height: max(740px, 100svh);
+    margin: 0;
     background: var(--kf-bg);
     color: var(--kf-ink);
     font: 14px/1.6 &quot;Microsoft YaHei UI&quot;, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, sans-serif;
     text-align: left;
   }
   #knowledge-flow-preview * { box-sizing: border-box; }
-  #knowledge-flow-preview button { font: inherit; }
-  #knowledge-flow-preview button, #knowledge-flow-preview .kf-drop { cursor: pointer; }
-  #knowledge-flow-preview button:focus-visible, #knowledge-flow-preview .kf-drop:focus-within { outline: 2px solid var(--kf-accent); outline-offset: 4px; }
+  #knowledge-flow-preview button, #knowledge-flow-preview input { font: inherit; }
+  #knowledge-flow-preview button, #knowledge-flow-preview .kf-drop { cursor: var(--cursor-interaction, pointer); }
+  #knowledge-flow-preview button:focus-visible, #knowledge-flow-preview a:focus-visible, #knowledge-flow-preview .kf-drop:focus-within { outline: 2px solid var(--kf-accent); outline-offset: 4px; }
   #knowledge-flow-preview [hidden] { display: none !important; }
   #knowledge-flow-preview .kf-background { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; user-select: none; mask-image: linear-gradient(transparent, #000 15%, #000 80%, transparent); }
-  #knowledge-flow-preview .kf-stream { position: absolute; left: var(--left); top: 0; width: max-content; color: var(--kf-accent); opacity: var(--kf-intensity); transform: rotate(var(--tilt)); }
+  #knowledge-flow-preview .kf-stream { position: absolute; left: var(--left); top: 0; width: max-content; color: light-dark(#776856, #c2ac91); opacity: var(--kf-intensity); transform: rotate(var(--tilt)); }
   #knowledge-flow-preview .kf-far { opacity: calc(var(--kf-intensity) * .53); }
   #knowledge-flow-preview .kf-ribbon { animation: kf-rise calc(var(--travel) * var(--kf-pace)) linear infinite; animation-delay: var(--delay); will-change: transform; }
   #knowledge-flow-preview .kf-cycle { height: 920px; display: flex; flex-direction: column; justify-content: space-around; gap: 28px; padding: 50px 0; }
@@ -1926,50 +1937,49 @@ html&gt;body{padding:0}&lt;/style&gt;
   @keyframes kf-rise { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(0, -50%, 0); } }
   #knowledge-flow-preview.kf-paused .kf-ribbon { animation-play-state: paused; }
   #knowledge-flow-preview.kf-playing .kf-ribbon { animation-play-state: running; }
-  #knowledge-flow-preview .kf-header { position: relative; display: flex; align-items: center; gap: 34px; min-height: 66px; padding: 0 28px; background: var(--kf-paper); border-bottom: 1px solid var(--kf-line); }
+  #knowledge-flow-preview .kf-header { position: relative; display: flex; align-items: center; gap: 34px; min-height: 72px; padding: 0 32px; background: var(--kf-bg); }
   #knowledge-flow-preview .kf-brand { display: flex; align-items: center; gap: 10px; font-weight: 500; white-space: nowrap; }
   #knowledge-flow-preview .kf-brand svg { width: 21px; height: 21px; color: var(--kf-accent); }
-  #knowledge-flow-preview .kf-nav { display: flex; align-self: stretch; gap: 26px; }
-  #knowledge-flow-preview .kf-nav-item { padding: 0; border: 0; border-bottom: 2px solid transparent; background: none; color: var(--kf-muted); white-space: nowrap; }
-  #knowledge-flow-preview .kf-current { border-bottom-color: var(--kf-accent); color: var(--kf-accent); font-weight: 500; }
+  #knowledge-flow-preview .kf-nav { display: flex; align-items: center; align-self: stretch; gap: 24px; }
+  #knowledge-flow-preview .kf-nav-item { display: flex; align-items: center; text-decoration: none; padding: 8px 12px; border: 0; border-radius: 7px; background: none; color: var(--kf-muted); white-space: nowrap; }
+  #knowledge-flow-preview .kf-current { background: var(--kf-wash); color: var(--kf-ink); font-weight: 500; }
   #knowledge-flow-preview .kf-motion { margin-left: auto; padding: 5px 0; border: 0; background: none; color: var(--kf-muted); font-size: 12px; white-space: nowrap; }
-  #knowledge-flow-preview .kf-main { position: relative; max-width: 664px; margin: 48px auto 40px; padding: 0 16px; }
-  #knowledge-flow-preview .kf-heading { margin-bottom: 24px; padding: 0 2px; }
-  #knowledge-flow-preview .kf-heading h2 { margin: 0 0 8px; color: var(--kf-ink); font-size: 25px; font-weight: 500; }
-  #knowledge-flow-preview .kf-heading p { margin: 0; color: var(--kf-muted); font-size: 13px; }
-  #knowledge-flow-preview .kf-workspace { background: var(--kf-paper); border: 1px solid var(--kf-line); border-radius: 4px; }
-  #knowledge-flow-preview .kf-section-head { display: flex; align-items: center; justify-content: space-between; padding: 21px 24px 16px; gap: 12px; }
-  #knowledge-flow-preview .kf-section-head h3 { margin: 0; font-size: 15px; font-weight: 500; }
+  #knowledge-flow-preview .kf-main { position: relative; max-width: 732px; margin: 64px auto 40px; padding: 0 16px; }
+  #knowledge-flow-preview .kf-heading { margin-bottom: 34px; padding: 0 2px; text-align: center; }
+  #knowledge-flow-preview .kf-heading h2 { margin: 0 0 12px; color: var(--kf-ink); font-family: Georgia, &quot;Songti SC&quot;, &quot;SimSun&quot;, serif; font-size: 36px; line-height: 1.4; font-weight: 400; }
+  #knowledge-flow-preview .kf-heading p { margin: 0; color: var(--kf-muted); font-size: 14px; line-height: 1.8; }
+  #knowledge-flow-preview .kf-workspace { background: var(--kf-paper); border: 1px solid var(--kf-line); border-radius: 18px; }
+  #knowledge-flow-preview .kf-section-head { display: flex; align-items: center; justify-content: space-between; padding: 24px 26px 18px; gap: 12px; }
+  #knowledge-flow-preview .kf-section-head h3 { margin: 0; font-size: 14px; font-weight: 500; }
   #knowledge-flow-preview .kf-section-head &gt; span { color: var(--kf-muted); font-size: 11px; }
-  #knowledge-flow-preview .kf-drop { position: relative; display: flex; flex-direction: column; align-items: center; gap: 9px; min-height: 232px; margin: 0 24px; padding: 28px 16px 24px; border: 1px solid var(--kf-line); border-radius: 3px; background: var(--kf-wash); text-align: center; }
+  #knowledge-flow-preview .kf-drop { position: relative; display: flex; flex-direction: column; align-items: center; gap: 9px; min-height: 180px; margin: 0 26px; padding: 24px 16px; border: 1px dashed var(--kf-line); border-radius: 12px; background: var(--kf-wash); text-align: center; }
   #knowledge-flow-preview .kf-drop &gt; svg { width: 23px; height: 23px; margin-bottom: 3px; color: var(--kf-muted); }
   #knowledge-flow-preview .kf-drop strong { font-size: 15px; font-weight: 500; }
   #knowledge-flow-preview .kf-drop &gt; span:not(.kf-file-button) { color: var(--kf-muted); font-size: 12px; }
   #knowledge-flow-preview .kf-drop small { color: var(--kf-muted); font-size: 11px; }
-  #knowledge-flow-preview .kf-file-button { display: inline-block; min-width: 112px; padding: 8px 20px; margin: 4px 0; border-radius: 3px; background: var(--kf-accent); color: var(--kf-paper); font-size: 12px; }
-  #knowledge-flow-preview .kf-file-input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
-  #knowledge-flow-preview .kf-list-header { display: flex; justify-content: space-between; margin: 20px 24px 0; padding-bottom: 12px; border-bottom: 1px solid var(--kf-line); font-size: 12px; }
+  #knowledge-flow-preview .kf-file-button { display: inline-block; min-width: 112px; padding: 9px 22px; margin: 4px 0; border-radius: 7px; background: var(--kf-ink); color: var(--kf-paper); font-size: 12px; }
+  #knowledge-flow-preview .kf-file-input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: var(--cursor-interaction, pointer); }
+  #knowledge-flow-preview .kf-list-header { display: flex; justify-content: space-between; margin: 22px 26px 0; padding-bottom: 12px; border-bottom: 1px solid var(--kf-line); font-size: 12px; }
   #knowledge-flow-preview .kf-file-count { color: var(--kf-muted); }
-  #knowledge-flow-preview .kf-files { min-height: 72px; padding: 14px 24px; }
+  #knowledge-flow-preview .kf-files { min-height: 76px; padding: 14px 26px; }
   #knowledge-flow-preview .kf-empty { margin: 10px 0; color: var(--kf-muted); text-align: center; font-size: 12px; }
-  #knowledge-flow-preview .kf-file-row { padding: 8px 0; color: var(--kf-ink); overflow-wrap: anywhere; font-size: 12px; }
-  #knowledge-flow-preview .kf-bottom { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 24px; border-top: 1px solid var(--kf-line); }
+  #knowledge-flow-preview .kf-file-row { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 8px 0; color: var(--kf-ink); overflow-wrap: anywhere; font-size: 12px; }
+  #knowledge-flow-preview .kf-bottom { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 18px 26px; border-top: 1px solid var(--kf-line); }
   #knowledge-flow-preview .kf-bottom &gt; span { color: var(--kf-muted); font-size: 11px; }
-  #knowledge-flow-preview .kf-generate { padding: 8px 17px; border: 0; border-radius: 3px; background: #e7eae5; color: #838a82; font-size: 12px; cursor: not-allowed; }
-  #knowledge-flow-preview .kf-note { margin: 16px 2px 0; color: var(--kf-muted); font-size: 11px; }
-  #knowledge-flow-preview .kf-history-empty { min-height: 370px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; color: var(--kf-muted); }
-  #knowledge-flow-preview .kf-history-empty &gt; svg { width: 28px; height: 28px; }
-  #knowledge-flow-preview .kf-history-empty p { margin: 0; }
-  #knowledge-flow-preview .kf-return { padding: 7px 20px; border: 1px solid var(--kf-line); border-radius: 3px; background: var(--kf-paper); color: var(--kf-accent); }
+  #knowledge-flow-preview .kf-generate { padding: 9px 20px; border: 0; border-radius: 7px; background: var(--kf-accent); color: var(--kf-paper); font-size: 12px; cursor: var(--cursor-interaction, pointer); }
+  #knowledge-flow-preview .kf-note { margin: 20px 2px 0; color: var(--kf-muted); text-align: center; font-size: 11px; }
   @media (max-width: 680px) {
     #knowledge-flow-preview .kf-header { gap: 16px; padding: 14px 16px; flex-wrap: wrap; }
-    #knowledge-flow-preview .kf-nav { order: 3; width: 100%; height: 36px; }
+    #knowledge-flow-preview .kf-nav { order: 3; width: 100%; height: 36px; gap: 12px; }
     #knowledge-flow-preview .kf-motion { margin-right: 0; }
-    #knowledge-flow-preview .kf-main { margin-top: 30px; }
-    #knowledge-flow-preview .kf-heading h2 { font-size: 22px; }
-    #knowledge-flow-preview .kf-section-head, #knowledge-flow-preview .kf-bottom { padding: 17px 16px; }
-    #knowledge-flow-preview .kf-drop { margin: 0 16px; }
-    #knowledge-flow-preview .kf-list-header { margin-left: 16px; margin-right: 16px; }
+    #knowledge-flow-preview .kf-main { margin-top: 38px; }
+    #knowledge-flow-preview .kf-heading { margin-bottom: 28px; }
+    #knowledge-flow-preview .kf-heading h2 { font-size: 29px; }
+    #knowledge-flow-preview .kf-heading p { font-size: 13px; }
+    #knowledge-flow-preview .kf-section-head, #knowledge-flow-preview .kf-bottom { padding: 20px 18px; }
+    #knowledge-flow-preview .kf-drop { margin: 0 18px; }
+    #knowledge-flow-preview .kf-list-header { margin-left: 18px; margin-right: 18px; }
+    #knowledge-flow-preview .kf-files { padding: 14px 18px; }
     #knowledge-flow-preview .kf-background { opacity: .65; }
     #knowledge-flow-preview .kf-bottom { flex-wrap: wrap; }
   }
@@ -1979,6 +1989,65 @@ html&gt;body{padding:0}&lt;/style&gt;
   @media (pointer: coarse) {
     #knowledge-flow-preview button { min-height: 44px; }
   }
+  #knowledge-flow-preview .kf-drop:hover, #knowledge-flow-preview .kf-drop.dragover { border-color: var(--kf-accent); }
+  #knowledge-flow-preview .kf-generate:disabled { background: light-dark(#e7e3dc, #444039); color: light-dark(#858075, #b2aa9c); cursor: not-allowed; }
+  #knowledge-flow-preview .file-order { color: var(--kf-muted); }
+  #knowledge-flow-preview .file-name { min-width: 0; overflow-wrap: anywhere; }
+  #knowledge-flow-preview .move-btns { display: flex; gap: 4px; }
+  #knowledge-flow-preview .move-btns button { width: 32px; min-height: 32px; padding: 4px; border: 1px solid var(--kf-line); border-radius: 7px; background: var(--kf-paper); color: var(--kf-accent); }
+  #knowledge-flow-preview .move-btns button:hover:not(:disabled) { background: var(--kf-wash); }
+  #knowledge-flow-preview .move-btns button:disabled { color: light-dark(#aaa398, #8f877b); cursor: default; }
+  @media (max-width: 420px) {
+    #knowledge-flow-preview .kf-files { padding: 12px 16px; }
+    #knowledge-flow-preview .kf-file-row { grid-template-columns: 26px minmax(0, 1fr); gap: 6px; }
+    #knowledge-flow-preview .move-btns { grid-column: 2; justify-content: flex-end; }
+  }
+  @media (pointer: coarse) {
+    #knowledge-flow-preview .move-btns button { width: 44px; min-height: 44px; }
+    #knowledge-flow-preview .kf-nav { min-height: 44px; }
+    #knowledge-flow-preview .kf-nav-item { min-height: 44px; }
+  }
+
+#knowledge-flow-preview.kf-history-view .kf-main { max-width: 860px; }
+#knowledge-flow-preview .kf-history-list { padding: 0 26px; }
+#knowledge-flow-preview .kf-history-workspace .kf-section-head { padding-bottom: 20px; }
+#knowledge-flow-preview .kf-history-workspace .kf-section-head &gt; span { font-size: 12px; }
+#knowledge-flow-preview .kf-record { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 24px 0; border-top: 1px solid var(--kf-line); }
+#knowledge-flow-preview .kf-record-info { min-width: 0; }
+#knowledge-flow-preview .kf-record-heading { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+#knowledge-flow-preview .kf-record-heading h3 { margin: 0; font-size: 15px; line-height: 1.7; font-weight: 500; overflow-wrap: anywhere; }
+#knowledge-flow-preview .kf-record-meta { display: flex; flex-wrap: wrap; gap: 4px 16px; margin-top: 9px; color: var(--kf-muted); font-size: 12px; overflow-wrap: anywhere; }
+#knowledge-flow-preview .kf-status { display: inline-block; flex-shrink: 0; padding: 2px 8px; border-radius: 5px; background: var(--kf-wash); color: var(--kf-muted); font-size: 11px; line-height: 1.7; white-space: nowrap; }
+#knowledge-flow-preview .kf-status-running { color: var(--kf-ink); }
+#knowledge-flow-preview .kf-status-success { background: light-dark(#eaf0e8, #303d31); color: light-dark(#46634c, #a6c2ab); }
+#knowledge-flow-preview .kf-status-failed { background: light-dark(#f7eae5, #49342f); color: light-dark(#934c40, #e3afa3); }
+#knowledge-flow-preview .kf-status-partial { background: light-dark(#f5eedf, #443b2b); color: light-dark(#785c2b, #d6bd85); }
+#knowledge-flow-preview .kf-record-actions { display: flex; align-items: center; flex-shrink: 0; gap: 8px; }
+#knowledge-flow-preview .kf-history-action { display: inline-flex; align-items: center; justify-content: center; min-height: 36px; padding: 7px 14px; border: 1px solid transparent; border-radius: 7px; background: none; color: var(--kf-ink); font-size: 12px; text-decoration: none; white-space: nowrap; }
+#knowledge-flow-preview .kf-record-open { border-color: var(--kf-line); }
+#knowledge-flow-preview .kf-history-action:hover { background: var(--kf-wash); }
+#knowledge-flow-preview .kf-history-primary { padding: 9px 22px; background: var(--kf-ink); color: var(--kf-paper); }
+#knowledge-flow-preview .kf-history-primary:hover { background: var(--kf-accent); }
+#knowledge-flow-preview .kf-history-state { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; gap: 12px; padding: 44px 18px; border-top: 1px solid var(--kf-line); text-align: center; }
+#knowledge-flow-preview .kf-history-state h3 { margin: 0; font-family: Georgia, &quot;Songti SC&quot;, &quot;SimSun&quot;, serif; font-size: 23px; line-height: 1.6; font-weight: 400; }
+#knowledge-flow-preview .kf-history-state p { max-width: 360px; margin: 0; color: var(--kf-muted); font-size: 13px; }
+#knowledge-flow-preview .kf-history-state .kf-history-action { margin-top: 10px; }
+@media (max-width: 680px) {
+    #knowledge-flow-preview .kf-history-list { padding: 0 18px; }
+    #knowledge-flow-preview .kf-record { align-items: stretch; flex-direction: column; gap: 16px; padding: 22px 0; }
+    #knowledge-flow-preview .kf-record-actions { justify-content: flex-end; }
+    #knowledge-flow-preview .kf-history-state { min-height: 280px; padding: 36px 4px; }
+    #knowledge-flow-preview .kf-history-state h3 { font-size: 21px; }
+}
+@media (pointer: coarse) {
+    #knowledge-flow-preview .kf-history-action { min-height: 44px; }
+}
+
+  #knowledge-flow-preview p, #knowledge-flow-preview h3 { font-family: inherit; }
+  #knowledge-flow-preview .kf-file-row { display: block; }
+  #knowledge-flow-preview .kf-history-preview-tools { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 4px 12px; margin-top: 16px; color: var(--kf-muted); font-size: 11px; }
+  #knowledge-flow-preview .kf-history-preview-tools p { margin: 0; }
+  #knowledge-flow-preview .kf-history-preview-tools button { color: var(--kf-muted); font-size: 11px; }
 &lt;/style&gt;
 
 &lt;script&gt;
@@ -2006,6 +2075,7 @@ html&gt;body{padding:0}&lt;/style&gt;
   const uploadPage = root.querySelector(&#x27;.kf-upload-page&#x27;);
   const historyPage = root.querySelector(&#x27;.kf-history-page&#x27;);
   function changePage(page) {
+    root.classList.toggle(&#x27;kf-history-view&#x27;, page === &#x27;history&#x27;);
     uploadPage.hidden = page !== &#x27;upload&#x27;;
     historyPage.hidden = page !== &#x27;history&#x27;;
     root.querySelectorAll(&#x27;[data-page]&#x27;).forEach(button =&gt; {
@@ -2015,7 +2085,7 @@ html&gt;body{padding:0}&lt;/style&gt;
     });
   }
   root.querySelectorAll(&#x27;[data-page]&#x27;).forEach(button =&gt; button.addEventListener(&#x27;click&#x27;, () =&gt; changePage(button.dataset.page)));
-  root.querySelector(&#x27;.kf-return&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; changePage(&#x27;upload&#x27;));
+  changePage(&#x27;history&#x27;);
   const fileInput = root.querySelector(&#x27;.kf-file-input&#x27;);
   const dropZone = root.querySelector(&#x27;.kf-drop&#x27;);
   function showFiles(files) {
@@ -2046,6 +2116,131 @@ html&gt;body{padding:0}&lt;/style&gt;
     tweak.addSlider(state, &#x27;period&#x27;, {label: &#x27;流动周期&#x27;, min: 60, max: 140, step: 5, unit: &#x27;秒&#x27;});
   }
 })();
+&lt;/script&gt;
+
+&lt;script&gt;
+(() =&gt; {
+  const root = document.getElementById(&#x27;knowledge-flow-preview&#x27;);
+  const examples = [
+    {task_id: 12, title: &#x27;高等数学：极限与连续&#x27;, status: &#x27;success&#x27;, page_count: 8, created_at: &#x27;2026-10-16T08:30:00+08:00&#x27;},
+    {task_id: 11, title: &#x27;线性代数：矩阵与线性方程组&#x27;, status: &#x27;partial&#x27;, page_count: 12, created_at: &#x27;2026-10-15T14:20:00+08:00&#x27;},
+    {task_id: 10, title: &#x27;数据结构：树与遍历&#x27;, status: &#x27;pending&#x27;, page_count: 6, created_at: &#x27;2026-10-14T10:15:00+08:00&#x27;},
+  ];
+  let empty = false;
+  function renderPreviewHistory() {
+    const API = {listTasks: async () =&gt; ({ok: true, json: async () =&gt; ({tasks: empty ? [] : examples})})};
+    return (() =&gt; {
+    const list = document.getElementById(&quot;task-list&quot;);
+    const count = document.getElementById(&quot;task-count&quot;);
+    const statuses = new Map([
+        [&quot;pending&quot;, &quot;待处理&quot;], [&quot;running&quot;, &quot;处理中&quot;], [&quot;success&quot;, &quot;已完成&quot;],
+        [&quot;failed&quot;, &quot;处理失败&quot;], [&quot;partial&quot;, &quot;部分完成&quot;],
+    ]);
+
+    function element(tag, className, text) {
+        const node = document.createElement(tag);
+        node.className = className;
+        if (text !== undefined) node.textContent = text;
+        return node;
+    }
+
+    function showState(title, description, action) {
+        const state = element(&quot;div&quot;, &quot;kf-history-state&quot;);
+        state.append(element(&quot;h3&quot;, &quot;&quot;, title));
+        if (description) state.append(element(&quot;p&quot;, &quot;&quot;, description));
+        if (action === &quot;upload&quot;) {
+            const link = element(&quot;a&quot;, &quot;kf-history-action kf-history-primary&quot;, &quot;新建整理&quot;);
+            link.href = &quot;/&quot;;
+            state.append(link);
+        } else if (action === &quot;retry&quot;) {
+            state.setAttribute(&quot;role&quot;, &quot;alert&quot;);
+            const retry = element(&quot;button&quot;, &quot;kf-history-action kf-history-primary&quot;, &quot;重新加载&quot;);
+            retry.type = &quot;button&quot;;
+            retry.addEventListener(&quot;click&quot;, async () =&gt; {
+                const hadFocus = document.activeElement === retry;
+                await loadHistory();
+                if (hadFocus &amp;&amp; document.activeElement === document.body) {
+                    const action = list.querySelector(&quot;button&quot;) || list.querySelector(&quot;a&quot;);
+                    if (action) action.focus();
+                }
+            });
+            state.append(retry);
+        }
+        list.replaceChildren(state);
+    }
+
+    function renderTask(task) {
+        const record = element(&quot;article&quot;, &quot;kf-record&quot;);
+        const info = element(&quot;div&quot;, &quot;kf-record-info&quot;);
+        const heading = element(&quot;div&quot;, &quot;kf-record-heading&quot;);
+        const title = task.title &amp;&amp; task.title !== &quot;未命名任务&quot; ? task.title : &quot;课堂整理&quot;;
+        const status = statuses.has(task.status) ? task.status : &quot;unknown&quot;;
+        heading.append(element(&quot;h3&quot;, &quot;&quot;, title), element(&quot;span&quot;, `kf-status kf-status-${status}`, statuses.get(status) || &quot;状态未知&quot;));
+        const meta = element(&quot;div&quot;, &quot;kf-record-meta&quot;);
+        // Existing API timestamps without an offset are stored as UTC.
+        const timestamp = String(task.created_at);
+        const date = new Date(/(?:Z|[+-]\d{2}:\d{2})$/i.test(timestamp) ? timestamp : `${timestamp}Z`);
+        const time = element(&quot;time&quot;, &quot;&quot;, Number.isNaN(date.getTime()) ? &quot;时间未知&quot; : date.toLocaleString(&quot;zh-CN&quot;, {
+            year: &quot;numeric&quot;, month: &quot;2-digit&quot;, day: &quot;2-digit&quot;, hour: &quot;2-digit&quot;, minute: &quot;2-digit&quot;, hour12: false,
+        }));
+        if (!Number.isNaN(date.getTime())) time.dateTime = date.toISOString();
+        meta.append(element(&quot;span&quot;, &quot;&quot;, `${task.page_count} 页`), time, element(&quot;span&quot;, &quot;&quot;, `任务 #${task.task_id}`));
+        info.append(heading, meta);
+        const actions = element(&quot;div&quot;, &quot;kf-record-actions&quot;);
+        const id = encodeURIComponent(String(task.task_id));
+        const open = element(&quot;a&quot;, &quot;kf-history-action kf-record-open&quot;, &quot;打开&quot;);
+        open.href = `/outline.html?task_id=${id}`;
+        open.setAttribute(&quot;aria-label&quot;, `打开${title}，任务 ${task.task_id}`);
+        const exportLink = element(&quot;a&quot;, &quot;kf-history-action kf-record-export&quot;, &quot;导出 Word&quot;);
+        exportLink.href = `/api/tasks/${id}/export`;
+        exportLink.setAttribute(&quot;aria-label&quot;, `导出${title}为 Word，任务 ${task.task_id}`);
+        actions.append(open, exportLink);
+        record.append(info, actions);
+        return record;
+    }
+
+    async function loadHistory() {
+        list.setAttribute(&quot;aria-busy&quot;, &quot;true&quot;);
+        count.textContent = &quot;读取中&quot;;
+        showState(&quot;正在读取整理记录&quot;, &quot;&quot;);
+        try {
+            const response = await API.listTasks();
+            if (!response.ok) throw new Error(&quot;History request failed&quot;);
+            const data = await response.json();
+            if (!Array.isArray(data.tasks)) throw new Error(&quot;Invalid history response&quot;);
+            const records = data.tasks.map(renderTask);
+            count.textContent = `${records.length} 条记录`;
+            if (records.length) list.replaceChildren(...records);
+            else showState(&quot;还没有整理记录&quot;, &quot;添加课堂照片后，整理记录会保存在这里。&quot;, &quot;upload&quot;);
+        } catch {
+            count.textContent = &quot;未加载&quot;;
+            showState(&quot;暂时无法加载记录&quot;, &quot;请检查网络连接，然后重新加载。&quot;, &quot;retry&quot;);
+        } finally {
+            list.setAttribute(&quot;aria-busy&quot;, &quot;false&quot;);
+        }
+    }
+
+    return loadHistory();
+})();
+  }
+  const toggle = root.querySelector(&#x27;[data-history-empty]&#x27;);
+  const feedback = root.querySelector(&#x27;#history-preview-feedback&#x27;);
+  toggle.addEventListener(&#x27;click&#x27;, () =&gt; {
+    empty = !empty;
+    toggle.textContent = empty ? &#x27;查看示例记录&#x27; : &#x27;查看空记录样式&#x27;;
+    feedback.textContent = &#x27;以下为样式示例，不代表实际整理记录。&#x27;;
+    return renderPreviewHistory();
+  });
+  root.querySelector(&#x27;.kf-history-page&#x27;).addEventListener(&#x27;click&#x27;, event =&gt; {
+    const link = event.target.closest(&#x27;a&#x27;);
+    if (!link) return;
+    event.preventDefault();
+    if (link.getAttribute(&#x27;href&#x27;) === &#x27;/&#x27;) root.querySelector(&#x27;[data-page=&quot;upload&quot;]&#x27;).click();
+    else feedback.textContent = &#x27;打开大纲与导出 Word 请在启动后的系统中使用。&#x27;;
+  });
+  return renderPreviewHistory();
+})();
+
 &lt;/script&gt;
 
 
@@ -2642,11 +2837,19 @@ html&gt;body{padding:0}&lt;/style&gt;
   if (!(frame instanceof HTMLIFrameElement)) {
     return;
   }
+  const isShare = document.documentElement.classList.contains(
+    "visualization-share-root",
+  );
   let viewportHeight = globalThis.innerHeight;
+  let sizeFingerprint = null;
+  let sizeWriteTimeout;
+  let lastSize = null;
+  let pendingSize = null;
   const storageKey = `codex:visualization-widget-state-v2:${JSON.stringify([
     globalThis.location.pathname,
     globalThis.location.search,
   ])}`;
+  const sizeStorageKey = `${storageKey}:share-size-v1`;
   const parseState = (serializedState) => {
     if (
       typeof serializedState !== "string" ||
@@ -2703,6 +2906,21 @@ html&gt;body{padding:0}&lt;/style&gt;
   } catch {
     storage = null;
   }
+  const persistSize = () => {
+    globalThis.clearTimeout(sizeWriteTimeout);
+    if (pendingSize == null) {
+      return;
+    }
+    try {
+      storage?.setItem(sizeStorageKey, pendingSize);
+    } catch {
+      // A denied or full cache must not affect the visualization.
+    }
+    pendingSize = null;
+  };
+  if (isShare) {
+    globalThis.addEventListener("pagehide", persistSize);
+  }
   const initialGlobals = {
     widgetState: state,
     statePersistence: storage == null ? "none" : "local",
@@ -2738,12 +2956,39 @@ html&gt;body{padding:0}&lt;/style&gt;
     if (data.type === "height") {
       const height = data.height;
       if (
-        typeof height === "number" &&
-        Number.isFinite(height) &&
-        height >= 0 &&
-        height <= 10_000
+        typeof height !== "number" ||
+        !Number.isFinite(height) ||
+        height < 0
       ) {
+        return;
+      }
+      if (height <= 10_000) {
+        const width = isShare && storage != null ? frame.clientWidth : null;
         frame.style.height = Math.ceil(height) + "px";
+        if (isShare && storage != null) {
+          const size = JSON.stringify({
+            fingerprint: sizeFingerprint,
+            width,
+            viewportHeight: globalThis.innerHeight,
+            dark: globalThis.matchMedia("(prefers-color-scheme: dark)").matches,
+            scale: globalThis.devicePixelRatio,
+            height: Math.ceil(height),
+          });
+          if (size !== lastSize) {
+            lastSize = size;
+            pendingSize = size;
+            globalThis.clearTimeout(sizeWriteTimeout);
+            sizeWriteTimeout = globalThis.setTimeout(persistSize, 100);
+          }
+        }
+      }
+      if (isShare) {
+        // Keep unusually tall content accessible without accepting an unbounded height.
+        if (height > 10_000 && Number.parseFloat(frame.style.height) === 0) {
+          frame.style.removeProperty("height");
+        }
+        frame.scrolling = height > 10_000 ? "auto" : "no";
+        document.documentElement.classList.add("visualization-share-ready");
       }
       return;
     }
@@ -2808,7 +3053,7 @@ html&gt;body{padding:0}&lt;/style&gt;
   }
   globalThis.addEventListener("resize", () => {
     const height = Number.parseFloat(frame.style.height);
-    if (!Number.isFinite(height) || height <= viewportHeight) {
+    if (!isShare && (!Number.isFinite(height) || height <= viewportHeight)) {
       frame.style.removeProperty("height");
     }
     viewportHeight = globalThis.innerHeight;
@@ -2826,13 +3071,42 @@ html&gt;body{padding:0}&lt;/style&gt;
     { once: true },
   );
   // Match the trusted bootstrap element, not the same text in an authored title.
-  frame.srcdoc = srcdoc.replace(
+  const frameHtml = srcdoc.replace(
     '<script type="application/json" id="codex-visualization-widget-state">__CODEX_VISUALIZATION_WIDGET_STATE__<\/script>',
     () =>
       '<script type="application/json" id="codex-visualization-widget-state">' +
       JSON.stringify(initialGlobals).replaceAll("<", "\\u003c") +
       "<\/script>",
   );
+  if (isShare && storage != null) {
+    // Fingerprint the rendered document, including restored widget state, without
+    // storing its content. This is a layout cache, not a security identity.
+    let hash = 5381;
+    for (let index = 0; index < frameHtml.length; index += 1) {
+      hash = (hash * 33 + frameHtml.charCodeAt(index)) % 4_294_967_296;
+    }
+    sizeFingerprint = hash.toString(36);
+    try {
+      const size = JSON.parse(storage.getItem(sizeStorageKey) ?? "null");
+      if (
+        size?.fingerprint === sizeFingerprint &&
+        size.width === frame.clientWidth &&
+        size.viewportHeight === globalThis.innerHeight &&
+        size.dark ===
+          globalThis.matchMedia("(prefers-color-scheme: dark)").matches &&
+        size.scale === globalThis.devicePixelRatio &&
+        typeof size.height === "number" &&
+        Number.isFinite(size.height) &&
+        size.height >= 0 &&
+        size.height <= 10_000
+      ) {
+        frame.style.height = size.height + "px";
+      }
+    } catch {
+      // Ignore missing or invalid cache entries and measure the live frame.
+    }
+  }
+  frame.srcdoc = frameHtml;
   delete frame.dataset.srcdoc;
 })();
 </script>
