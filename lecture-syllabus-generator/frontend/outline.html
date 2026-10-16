@@ -13,6 +13,11 @@
     </header>
     <main class="container">
         <section class="outline-section">
+            <p id="outline-status" class="error hidden" role="alert"></p>
+            <div class="outline-recovery">
+                <button id="outline-retry-btn" class="btn btn-secondary hidden">重新加载大纲</button>
+                <a id="outline-progress-link" href="#">查看任务处理状态</a>
+            </div>
             <div class="toolbar">
                 <button id="edit-btn" class="btn btn-secondary">编辑</button>
                 <button id="save-btn" class="btn btn-primary hidden">保存</button>
@@ -25,6 +30,7 @@
             <div class="legend">
                 <span class="legend-item"><span class="dot dot-original"></span>课堂原话</span>
                 <span class="legend-item"><span class="dot dot-ai"></span>AI推断</span>
+                <span class="legend-item">来源待核对：原记录未提供来源类型</span>
             </div>
         </section>
     </main>

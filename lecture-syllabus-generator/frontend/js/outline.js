@@ -1,30 +1,68 @@
-const params = new URLSearchParams(window.location.search);
-const taskId = params.get("task_id");
-
-if (!taskId) {
-    window.location.href = "/";
-}
-
-const outlineView = document.getElementById("outline-view");
-const outlineEditor = document.getElementById("outline-editor");
-const editBtn = document.getElementById("edit-btn");
-const saveBtn = document.getElementById("save-btn");
-const cancelEditBtn = document.getElementById("cancel-edit-btn");
-const regenerateBtn = document.getElementById("regenerate-btn");
-const exportBtn = document.getElementById("export-btn");
-
+(() => {
+const taskId = new URLSearchParams(window.location.search).get("task_id");
+if (!/^[1-9]\d*$/.test(taskId || "")) { window.location.href = "/"; return; }
+const byId = id => document.getElementById(id);
+const outlineView = byId("outline-view");
+const outlineEditor = byId("outline-editor");
+const editBtn = byId("edit-btn");
+const saveBtn = byId("save-btn");
+const cancelEditBtn = byId("cancel-edit-btn");
+const regenerateBtn = byId("regenerate-btn");
+const exportBtn = byId("export-btn");
+const notice = byId("outline-status");
+const retryBtn = byId("outline-retry-btn");
+byId("outline-progress-link").href = "/progress.html?task_id=" + taskId;
 let currentMarkdown = "";
+let loaded = false;
+let editing = false;
+let busy = false;
+let regenerationUnconfirmed = false;
 
+function updateControls() {
+    editBtn.disabled = regenerateBtn.disabled = !loaded || busy;
+    exportBtn.disabled = !loaded || busy || editing;
+    saveBtn.disabled = !loaded || busy;
+    cancelEditBtn.disabled = retryBtn.disabled = busy;
+    outlineEditor.disabled = busy;
+}
+function setEditing(value) {
+    editing = value;
+    outlineView.classList[value ? "add" : "remove"]("hidden");
+    outlineEditor.classList[value ? "remove" : "add"]("hidden");
+    editBtn.classList[value ? "add" : "remove"]("hidden");
+    for (const button of [saveBtn, cancelEditBtn]) button.classList[value ? "remove" : "add"]("hidden");
+    updateControls();
+}
+async function read(response) {
+    let data;
+    try { data = await response.json(); } catch { throw new Error("服务返回的数据无法读取，请重试。"); }
+    if (!response.ok) throw new Error(data.message || "请求失败，请重试。");
+    return data;
+}
+async function action(work, reload = false) {
+    if (busy) return;
+    busy = true;
+    updateControls();
+    notice.classList.add("hidden");
+    retryBtn.classList.add("hidden");
+    try { await work(); } catch (error) {
+        notice.textContent = error.message || "连接中断，请检查网络后重试。";
+        notice.classList.remove("hidden");
+        if (reload) retryBtn.classList.remove("hidden");
+    } finally { busy = false; updateControls(); }
+}
 async function loadOutline() {
-    const resp = await API.getOutline(taskId);
-    if (!resp.ok) {
-        const err = await resp.json();
-        outlineView.innerHTML = `<p class="error">加载失败：${err.message}</p>`;
-        return;
+    if (regenerationUnconfirmed) {
+        const task = await read(await API.getTask(taskId));
+        if (task.status === "running") throw new Error("任务仍在处理中，请稍后重新加载大纲。");
     }
-    const data = await resp.json();
+    const data = await read(await API.getOutline(taskId));
+    if (typeof data.markdown !== "string") throw new Error("大纲数据无法读取，请重试。");
     currentMarkdown = data.markdown;
+    loaded = true;
+    regenerationUnconfirmed = false;
     renderMarkdown(currentMarkdown);
+    setEditing(false);
 }
 
 function renderMarkdown(md) {
@@ -66,64 +104,47 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
+
 editBtn.addEventListener("click", () => {
-    outlineView.classList.add("hidden");
-    outlineEditor.classList.remove("hidden");
+    if (busy || !loaded) return;
     outlineEditor.value = currentMarkdown;
-    editBtn.classList.add("hidden");
-    saveBtn.classList.remove("hidden");
-    cancelEditBtn.classList.remove("hidden");
+    setEditing(true);
 });
-
-saveBtn.addEventListener("click", async () => {
-    const resp = await API.updateOutline(taskId, outlineEditor.value);
-    if (!resp.ok) {
-        const err = await resp.json();
-        alert(`保存失败：${err.message}`);
-        return;
-    }
-    currentMarkdown = outlineEditor.value;
+saveBtn.addEventListener("click", () => action(async () => {
+    const draft = outlineEditor.value;
+    await read(await API.updateOutline(taskId, draft));
+    currentMarkdown = draft;
     renderMarkdown(currentMarkdown);
-    outlineView.classList.remove("hidden");
-    outlineEditor.classList.add("hidden");
-    editBtn.classList.remove("hidden");
-    saveBtn.classList.add("hidden");
-    cancelEditBtn.classList.add("hidden");
+    setEditing(false);
+}));
+cancelEditBtn.addEventListener("click", () => { if (!busy) setEditing(false); });
+regenerateBtn.addEventListener("click", () => {
+    if (busy || !loaded || !confirm("重新生成将覆盖当前大纲及尚未保存的修改，是否继续？")) return;
+    return action(async () => {
+        loaded = false;
+        regenerationUnconfirmed = true;
+        updateControls();
+        await read(await API.regenerate(taskId));
+        regenerationUnconfirmed = false;
+        await loadOutline();
+    }, true);
 });
-
-cancelEditBtn.addEventListener("click", () => {
-    outlineView.classList.remove("hidden");
-    outlineEditor.classList.add("hidden");
-    editBtn.classList.remove("hidden");
-    saveBtn.classList.add("hidden");
-    cancelEditBtn.classList.add("hidden");
+exportBtn.addEventListener("click", () => {
+    if (busy || !loaded || editing) return;
+    return action(async () => {
+        const response = await API.exportWord(taskId);
+        if (!response.ok) await read(response);
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        try {
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = "outline_" + taskId + ".docx";
+            link.click();
+        } finally { URL.revokeObjectURL(url); }
+    });
 });
-
-regenerateBtn.addEventListener("click", async () => {
-    if (!confirm("重新生成将覆盖当前大纲，是否继续？")) return;
-    const resp = await API.regenerate(taskId);
-    if (!resp.ok) {
-        const err = await resp.json();
-        alert(`重新生成失败：${err.message}`);
-        return;
-    }
-    await loadOutline();
-});
-
-exportBtn.addEventListener("click", async () => {
-    const resp = await API.exportWord(taskId);
-    if (!resp.ok) {
-        const err = await resp.json();
-        alert(`导出失败：${err.message}`);
-        return;
-    }
-    const blob = await resp.blob();
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `outline_${taskId}.docx`;
-    a.click();
-    URL.revokeObjectURL(url);
-});
-
-loadOutline();
+retryBtn.addEventListener("click", () => action(loadOutline, true));
+updateControls();
+return action(loadOutline, true);
+})();

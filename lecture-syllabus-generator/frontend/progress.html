@@ -13,7 +13,8 @@
     </header>
     <main class="container">
         <section class="progress-section">
-            <h2>任务处理中</h2>
+            <h2 id="progress-title">正在读取任务</h2>
+            <p id="progress-message" role="status" aria-live="polite">正在检查已保存的处理结果。</p>
             <div class="progress-steps">
                 <div class="step" id="step-recognize">
                     <span class="step-icon">1</span>
@@ -37,6 +38,9 @@
                 </div>
             </div>
             <div id="page-details" class="page-details"></div>
+            <div id="progress-error" class="error hidden" role="alert">
+                <p id="progress-error-message"></p>
+            </div>
             <div id="low-confidence-warning" class="warning hidden">
                 <p>⚠️ 以下页面识别置信度较低，建议重拍：</p>
                 <ul id="low-confidence-pages"></ul>
@@ -47,6 +51,7 @@
             </div>
             <div class="actions">
                 <button id="retry-btn" class="btn btn-warning hidden">重试失败页</button>
+                <button id="continue-btn" class="btn btn-secondary hidden">重新检查并继续</button>
                 <a id="view-outline" class="btn btn-primary hidden" href="#">查看大纲</a>
             </div>
         </section>

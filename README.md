@@ -4,6 +4,8 @@
 
 当前版本提供本地运行的前后端及模拟数据流程，包含多模态模型调用入口。默认使用 `mock` 模式，无需 API 密钥即可演示完整流程；模拟结果是预设的数据库课程内容，不代表上传图片的真实识别结果。
 
+本轮交付阶段为 EXP03：完成可运行工程、模拟业务闭环、异常恢复、自动化验证与交付文档。EXP04 仅整理接口和后续接入要求，本轮不新增真实 AI 服务。阶段范围与验收依据见 [EXP03 工程交付](docs/exp03-delivery.md)，后续工作见 [EXP04 准备说明](docs/exp04-readiness.md)。
+
 ## 功能与当前实现
 
 | 功能 | 当前实现 |
@@ -110,6 +112,14 @@ Windows 可直接双击 `lecture-syllabus-generator/scripts/start_backend.bat`�
 
 页面默认遵循系统的“减少动态效果”设置。背景静止时，可点击右上角“播放背景”主动开启，再次点击“暂停背景”停止，无需修改系统设置。两页共用 `frontend/css/home.css` 与 `frontend/js/knowledge-flow.js`；记录列表的补充样式位于 `frontend/css/history.css`，不依赖前端构建工具或外部 CDN。
 
+点击右上角“速度”可展开滑杆，在 0.25×–3× 之间调整公式向上流动的速度，也可用方向键微调。暂停时调速仍保持暂停；所选速度在浏览器允许本地存储时跨刷新与首页／历史页保留。离线预览同样提供这套控件，使用当前前端源码生成；修改界面后可从仓库根目录执行：
+
+```powershell
+.\lecture-syllabus-generator\backend\.venv\Scripts\python.exe lecture-syllabus-generator/scripts/build_frontend_preview.py
+```
+
+进度页打开时先检查已保存结果；已有大纲不会因刷新自动重新识别或生成。失败页重试前重新读取任务与页面状态，运行中的任务只检查状态。重新生成失败时保留旧稿；请求响应丢失时先查询服务器结果，避免未经确认覆盖新修改。
+
 ## 模型与上传配置
 
 编辑 `lecture-syllabus-generator/backend/.env`：
@@ -200,13 +210,19 @@ APP_CLUSTER_PROVIDER=model
 
 首次运行需先按“快速开始”创建虚拟环境。测试默认自行配置隔离环境，不需要修改 `.env`。上述测试不能验证真实模型的识别质量，也不能替代浏览器手工验收。
 
-历史记录页的前端逻辑可在仓库根目录使用 Node.js 检查，无需安装 npm 依赖：
+前端交互逻辑可在仓库根目录使用 Node.js 检查，无需安装 npm 依赖：
 
 ```powershell
-node --test lecture-syllabus-generator/frontend/tests/history.test.cjs
+node --test lecture-syllabus-generator/frontend/tests/*.test.cjs
 ```
 
-这些用例覆盖记录展示、空状态、网络失败与重试、时间转换和键盘重试焦点，不调用真实接口。
+这些用例覆盖记录展示、空状态、网络失败与重试、时间转换、背景调速、进度恢复、编辑草稿保留与结果未知时的只读恢复，不调用真实接口。编辑中禁止导出尚未保存的内容；重新生成的响应或新结果读取失败时，先重新加载当前结果，再开放修改和导出。
+
+安装测试依赖与 Node.js 后，也可从仓库根目录一次运行全部工程检查：
+
+```powershell
+pwsh -NoProfile -File lecture-syllabus-generator/scripts/verify_exp03.ps1
+```
 
 ### 已有数据库升级与来源保留
 
@@ -223,6 +239,9 @@ node --test lecture-syllabus-generator/frontend/tests/history.test.cjs
 
 ## 工程文档
 
+- [EXP03 工程交付与验收](docs/exp03-delivery.md)
+- [EXP03 本轮验证记录](docs/verification/2026-10-17-exp03-delivery.md)
+- [EXP04 工程准备与接入待办](docs/exp04-readiness.md)
 - [暖纸界面验证与分支整理决定](docs/verification/2026-10-16-warm-paper-and-branch-audit.md)
 - [项目初始化与工程基线记录](doc1_text.txt)
 - [开发任务清单与实现计划](doc2_text.txt)
